@@ -31,10 +31,8 @@ def game(data, first_win):
                         return number * card.sum()
                     else:
                         won_cards_index.append(i)
-                        last_card = card
-
-            if len(won_cards_index) == len(cards):
-                return last_card.sum() * number
+                        if len(won_cards_index) == len(cards):
+                            return card.sum() * number
 
 
 def part1(data):
