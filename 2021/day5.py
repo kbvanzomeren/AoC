@@ -20,29 +20,21 @@ def prep_data(data):
 def build_vent_map(data, diagonals=False):
     coords, max_x, max_y = prep_data(data)
     map = np.zeros((max_x + 1, max_y + 1))
-    x_range = y_range = []
     for (x1, y1, x2, y2) in coords:
+        y_range = x_range = []
         if x1 != x2 and y1 != y2 and diagonals:
-            if x1 > x2:
-                x_range = list(range(x1, x2 - 1, -1))
-            else:
-                x_range = list(range(x1, x2 + 1))
-            if y1 > y2:
-                y_range = list(range(y1, y2 - 1, -1))
-            else:
-                y_range = list(range(y1, y2 + 1))
-        elif x1 != x2 and y1 != y2:
-            y_range = x_range = []
+            dx = 1 if x1 <= x2 else -1
+            dy = 1 if y1 <= y2 else -1
+            x_range = range(x1, x2 + dx, dx)
+            y_range = range(y1, y2 + dy, dy)
         elif x1 == x2:
-            y_range = list(range(min(y1, y2), max(y1, y2) + 1))
-            x_range = [x1 for _ in range(len(y_range))]
+            y_range = range(min(y1, y2), max(y1, y2) + 1)
+            x_range = [x1] * len(y_range)
         elif y1 == y2:
-            x_range = list(range(min(x1, x2), max(x1, x2) + 1))
-            y_range = [y1 for _ in range(len(x_range))]
+            x_range = range(min(x1, x2), max(x1, x2) + 1)
+            y_range = [y1] * len(x_range)
         map[y_range, x_range] += 1
-    map[map == 1] = 0
-    map[map > 1] = 1
-    return int(map.sum())
+    return int((map > 1).sum())
 
 
 def part1(data):
