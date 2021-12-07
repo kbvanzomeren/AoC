@@ -10,13 +10,13 @@ def load_data_int_array(file):
     return data
 
 
-def load_data_split(file, separator):
+def load_data_split(file, separator=' '):
     with open(file, "r") as fd:
         data = [_l.split(separator) for _l in fd.read().splitlines()]
     return data
 
 
-def load_data_split_cast_to_int(file, separator):
+def load_data_split_cast_to_int(file, separator=',', one_list=True):
     data = load_data(file)
     result = []
     for line in data:
@@ -28,4 +28,6 @@ def load_data_split_cast_to_int(file, separator):
                 value = item
             result_line.append(value)
         result.append(result_line)
+    if one_list:
+        return result[0]
     return result
