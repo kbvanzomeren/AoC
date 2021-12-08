@@ -54,12 +54,12 @@ def get_value(note, display):
 
     _results = {j: str(i) for i, j in results.items()}
 
-    return eval(''.join([_results[_d] for _d in display] + ['.']))
+    return int(''.join([_results[_d] for _d in display]))
 
 
 def part2(data):
     notes, displays = prep_data(data)
-    return int(sum([get_value(note, display) for note, display in zip(notes, displays)]))
+    return sum([get_value(note, display) for note, display in zip(notes, displays)])
 
 
 if __name__ == "__main__":
