@@ -9,7 +9,6 @@ def test(file_name, part1, part2, a1=1, a2=2, _load_data=None) -> None:
         data = _load_data(test_file_path)
     else:
         data = load_data(test_file_path)
-    print(data)
     result_day_1 = part1(data)
     result_day_2 = part2(data)
 
