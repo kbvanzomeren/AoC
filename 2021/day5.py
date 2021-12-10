@@ -11,8 +11,7 @@ FILE_NAME = os.path.basename(__file__).replace('.py', 'a.txt')
 def prep_data(data):
     coords = []
     for line in data:
-        coor1, coor2 = line.split(' -> ')
-        coords.append([int(i) for i in coor1.split(',')] + [int(i) for i in coor2.split(',')])
+        coords.append([int(i) for _coord in line.split(' -> ') for i in _coord.split(',')])
     max_coords = max(i for coord in coords for i in coord)
     return coords, max_coords, max_coords
 
