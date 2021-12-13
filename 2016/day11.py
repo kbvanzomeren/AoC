@@ -21,7 +21,7 @@ def build_neighbors_map(data):
 
         for i in [x - 1, x,  x + 1]:
             for j in [y - 1, y, y + 1]:
-                if 0 <= i < mx and 0 <= j < my and not (x == i and y == j):
+                if 0 <= i < mx and 0 <= j < my and not (x == i and y ==j):
                     results[y, x][0].append(j)
                     results[y, x][1].append(i)
     return results
