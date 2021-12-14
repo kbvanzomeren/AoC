@@ -54,7 +54,7 @@ def part2(data):
     sheet = do_fold(data)
     sheet[sheet > 1] = 1
     for row in sheet:
-        print(''.join(['0' if c else ' ' for c in row]))
+        print(''.join(['#' if c else ' ' for c in row]))
 
 
 if __name__ == "__main__":

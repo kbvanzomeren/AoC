@@ -1,4 +1,5 @@
 import os
+import time
 from collections import defaultdict
 
 from functions.generic import *
@@ -104,4 +105,6 @@ if __name__ == "__main__":
     file_path = INPUT_DIR + FILE_NAME
     data = load_data(file_path)
     print(f"Answer to part 1 is {part1(data)}")
+    start = time.time()
     print(f"Answer to part 2 is {part2(data)}")
+    print(time.time() - start)
