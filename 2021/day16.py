@@ -1,5 +1,3 @@
-import re
-from collections import defaultdict
 
 from functions.generic import *
 from functions.load_data import load_data
@@ -10,25 +8,7 @@ INPUT_DIR = f"./inputs/"
 FILE_NAME = os.path.basename(__file__).replace('.py', 'a.txt')
 
 
-def prep_data(data):
-    bots = defaultdict(list)
-    rules = defaultdict(list)
-    for line in data:
-        if 'value' in line:
-            value, bot = re.findall(r'\d+', line)
-            bots[bot].append(int(value))
-        else:
-            if " gives low to output " in line:
-                
-            bot, low, high = re.findall(r'\d+', line)
-
-            rules[bot] = [int(low), int(high)]
-    return bots, rules
-
-
 def part1(data):
-    bots, rules = prep_data(data)
-    for
     return 1
 
 
