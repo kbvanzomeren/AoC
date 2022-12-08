@@ -19,7 +19,6 @@ def part2(data):
     for password in data:
         if len(password) == len(set(password)):
             sorted_words = [''.join(sorted(word)) for word in password]
-            print(sorted_words)
             if len(password) == len(set(sorted_words)):
                 valid += 1
     return valid

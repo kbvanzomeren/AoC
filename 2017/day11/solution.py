@@ -35,6 +35,7 @@ def part1(data):
                 mydict[k] += _store
 
         result = {key: value for key, value in mydict.items() if value != 0}
+        print(result)
         print(sum([value for _, value in result.items()]))
 
     return 1

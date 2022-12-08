@@ -60,7 +60,7 @@ def part2(data):
     names, ids, checksums = prep_data(data)
     for (name, _id, checksum) in zip(names, ids, checksums):
         name = get_value(name, _id, checksum, False)
-        if name == 'northpoleobjectstorage':
+        if 'north' in name:
             return _id
     return 2
 

@@ -36,14 +36,10 @@ def chunks(lst, n):
 
 
 def part2(data, n=256):
-    # data = '1,2,4'
     _data = []
     for _c in data:
-        # _data += [ord(c) for c in str(n)]
         _data.append(ord(_c))
-        # _data.append(44)
     data = _data + [17, 31, 73, 47, 23]
-
 
     _l = 2 * range(n)
     current_postion = 0
@@ -77,8 +73,6 @@ def part2(data, n=256):
             val = '0' + val
 
         _hex.append(val)
-
-    print(''.join(_hex))
     return ''.join(_hex)
 
 
