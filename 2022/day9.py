@@ -1,8 +1,6 @@
 from functions.generic import *
-from functions.load_data import load_data, load_data_split
-# from functions.load_data import load_data_split_cast_to_int as load_data
+from functions.load_data import load_data_split
 from functions.test import test
-from time import sleep
 
 INPUT_DIR = f"./inputs/"
 FILE_NAME = os.path.basename(__file__).replace('.py', 'a.txt')
