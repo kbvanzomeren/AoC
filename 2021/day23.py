@@ -134,9 +134,9 @@ class Board:
                 points2.append(point.__str__())
         print(points2)
 
-    def get_valid_moves(self, point):
-        for point in self.free_points:
-            if po
+    # def get_valid_moves(self, point):
+    #     for point in self.free_points:
+    #         if po
 
     def check_possible_steps(self):
         apmh = []
