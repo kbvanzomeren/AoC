@@ -9,10 +9,7 @@ MOVES = {"L": [-1, 0], "U": [0, 1], "R": [1, 0], "D": [0, -1]}
 
 
 def prep_data(data):
-    moves = []
-    for m, d in data:
-        moves.append([m, int(d)])
-    return moves
+    return [[m, int(d)] for m, d in data]
 
 
 def make_move_pro(_head, _tail):  # 🙈
@@ -42,8 +39,6 @@ def run_instructions(data, l_rope):
             rope[0][1] += dy
             for sub_head, sub_tail in zip(rope[:-1], rope[1:]):
                 make_move(sub_head, sub_tail)
-                # else:
-                #     break
             visited.add(tuple(rope[-1]))
     return len(visited)
 
