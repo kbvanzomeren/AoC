@@ -9,7 +9,6 @@ _map_game = {'X': {'A': 4, 'B': 1, 'C': 7}, 'Y': {'A': 8, 'B': 5, 'C': 2}, 'Z': 
 _map_game_out = {'X': {'A': 3, 'B': 1, 'C': 2}, 'Y': {'A': 4, 'B': 5, 'C': 6}, 'Z': {'A': 8, 'B': 9, 'C': 7}}
 
 
-
 def part1(rounds):
     return sum([_map_game[you][elf] for (elf, you) in rounds])
 

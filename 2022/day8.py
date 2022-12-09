@@ -1,3 +1,5 @@
+import math
+
 from functions.generic import *
 from functions.load_data import load_data
 from functions.test import test
@@ -18,26 +20,17 @@ def get_line_of_sight(forest, x, y):
     return left, up, right, down
 
 
-def check_for_trees(forest):
+def get_visible_trees(forest):
     height, width = len(forest) - 1, len(forest[0]) - 1
     count = 0
     for y, row in enumerate(forest):
         for x, h in enumerate(row):
-            if x == 0 or y == 0 or y == height or x == width:
-                count += 1
-            else:
-                left, up, right, down = get_line_of_sight(forest, x, y)
-                count += h and (h > max(left) or h > max(right) or h > max(up) or h > max(down))
+            is_edge = x == 0 or y == 0 or y == height or x == width
+            count += is_edge or any(h > max(line) for line in get_line_of_sight(forest, x, y))
     return count
 
 
-def part1(data):
-    forest = prep_data(data)
-    check_for_trees(forest)
-    return check_for_trees(forest)
-
-
-def get_line_score(line, h):
+def get_view_distance(line, h):
     line_count = 0
     for _h in line:
         line_count += 1
@@ -46,23 +39,25 @@ def get_line_score(line, h):
     return line_count
 
 
-def get_score(forest, x, y, own_height):
-    left, up, right, down = get_line_of_sight(forest, x, y)
-    multi = 1
-    for line in [left, up, right, down]:
-        multi *= get_line_score(line, own_height)
-    return multi
-
-
-def part2(data):
-    forest = prep_data(data)
+def get_max_score(forest):
     height, width = len(forest) - 1, len(forest[0]) - 1
     scores = []
     for y, row in enumerate(forest):
         for x, h in enumerate(row):
             if not x == 0 or y == 0 or y == height or x == width:
-                scores.append(get_score(forest, x, y, h))
+                own_height = forest[y][x]
+                scores.append(math.prod([get_view_distance(line, own_height) for line in get_line_of_sight(forest, x, y)]))
     return max(scores)
+
+
+def part1(data):
+    forest = prep_data(data)
+    return get_visible_trees(forest)
+
+
+def part2(data):
+    forest = prep_data(data)
+    return get_max_score(forest)
 
 
 if __name__ == "__main__":
