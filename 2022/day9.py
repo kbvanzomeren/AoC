@@ -24,7 +24,8 @@ def make_move_pro(_head, _tail):  # 🙈
 
 
 def get_delta(val):
-    return -1 if val < 0 else (1 if val > 0 else 0)
+    # return -1 if val < 0 else (1 if val > 0 else 0)
+    return 1 if val == 1 else val // 2  # 😎
 
 
 def make_move(_head, _tail):
