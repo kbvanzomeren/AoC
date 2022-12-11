@@ -4,6 +4,16 @@ def load_data(file):
     return data
 
 
+def load_data_split_empty(file, split_lines=True):
+    result = []
+    with open(file, "r") as fd:
+        if split_lines:
+            result = [block.splitlines() for block in fd.read().split("\n\n")]
+        else:
+            result = fd.read().split("\n\n")
+    return result
+
+
 def load_data_int_array(file):
     with open(file, "r") as fd:
         data = [int(_l) for _l in fd.read().splitlines()]

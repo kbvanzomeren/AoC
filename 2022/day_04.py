@@ -13,7 +13,6 @@ def prep_data(data):
 
 
 def part1(data):
-
     return sum([l1 <= l2 and u1 >= u2 or l1 >= l2 and u1 <= u2 for (l1, u1, l2, u2) in prep_data(data)])
 
 

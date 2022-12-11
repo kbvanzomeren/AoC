@@ -72,7 +72,6 @@ def part2(data):
     dirs = get_dir_structure(data)
     dirs_sizes = {}
     calc_dir_size(dirs, "root", dirs_sizes)
-    _sum = 0
     _min = 10e12
     req = 30000000 - (70000000 - dirs_sizes['root'])
     for key, value in dirs_sizes.items():
