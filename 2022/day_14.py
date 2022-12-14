@@ -14,22 +14,21 @@ def prep_data(data):
             sx, sy = [int(x) for x in start.split(',')]
             ex, ey = [int(y) for y in end.split(',')]
             if sx != ex:
-                dir = 1 if ex > sx else -1
-                for x in range(sx, ex + dir, dir):
+                _dir = 1 if ex > sx else -1
+                for x in range(sx, ex + _dir, _dir):
                     rocks.add((x, sy))
             else:
-                dir = 1 if ey > sy else -1
-                for y in range(sy, ey + dir, dir):
+                _dir = 1 if ey > sy else -1
+                for y in range(sy, ey + _dir, _dir):
                     rocks.add((sx, y))
     return rocks
 
 
-def move_to(blocked, current, max_depth, part=1):
-    if part == 1 and current[1] >= max_depth:
+def move_to(blocked, current, max_depth, part=0):
+    if part == 0 and current[1] >= max_depth:
         return None
     elif part == 2 and current[1] + 1 == max_depth:
-        blocked.add(current)
-        return current
+        pass
     elif (current[0], current[1] + 1) not in blocked:
         return move_to(blocked, (current[0], current[1] + 1), max_depth, part=part)
     elif (current[0] - 1, current[1] + 1) not in blocked:
@@ -40,16 +39,13 @@ def move_to(blocked, current, max_depth, part=1):
     return current
 
 
-def run_simulation(_data, start=500, part=1):
+def run_simulation(_data, part=0):
     blocked = prep_data(_data)
     start = (500, 0)
     count = 0
-    max_y = max([rock[1] for rock in blocked])
-    if part == 2:
-        max_y += 2
+    max_y = max([rock[1] for rock in blocked]) + part
     while start not in blocked:
-        _next = move_to(blocked, start, max_depth=max_y, part=part)
-        if _next is None:
+        if move_to(blocked, start, max_depth=max_y, part=part) is None:
             break
         count += 1
     return count
