@@ -24,14 +24,6 @@ def prep_data(data):
     return rocks
 
 
-def get_lowest(blocked, start):
-    y = 0
-    while True:
-        if (start, y) in blocked:
-            return start, y - 1
-        y += 1
-
-
 def move_to(blocked, current, max_depth, part=1):
     if part == 1 and current[1] >= max_depth:
         return None
@@ -50,15 +42,13 @@ def move_to(blocked, current, max_depth, part=1):
 
 def run_simulation(_data, start=500, part=1):
     blocked = prep_data(_data)
+    start = (500, 0)
     count = 0
     max_y = max([rock[1] for rock in blocked])
     if part == 2:
         max_y += 2
-    while True:
-        current = get_lowest(blocked, start)
-        if (500, 0) in blocked:
-            break
-        _next = move_to(blocked, current, max_depth=max_y, part=part)
+    while start not in blocked:
+        _next = move_to(blocked, start, max_depth=max_y, part=part)
         if _next is None:
             break
         count += 1
