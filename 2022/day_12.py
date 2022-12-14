@@ -12,6 +12,7 @@ HEIGHTS = {c: i for i, c in enumerate(string.ascii_lowercase, start=1)}
 HEIGHTS['S'] = 1
 HEIGHTS['E'] = 26
 
+
 class MazeSolver:
     def __init__(self, data, position=[0, 0], visited=[], steps=0, target='X', is_reverted=False):
         self.data = data
