@@ -39,10 +39,8 @@ def move_to(blocked, current, max_depth, part=0):
     return current
 
 
-def run_simulation(_data, part=0):
+def run_simulation(_data, start=(500, 0), part=0, count=0):
     blocked = prep_data(_data)
-    start = (500, 0)
-    count = 0
     max_y = max([rock[1] for rock in blocked]) + part
     while start not in blocked:
         if move_to(blocked, start, max_depth=max_y, part=part) is None:
