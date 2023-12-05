@@ -14,9 +14,9 @@ def test(file_name, part1, part2=None, a1=1, a2=2, _load_data=None, _load_kwargs
     result_day_1 = part1(data)
 
     print(f"Answer to test part 1 is {result_day_1}")
-    print(f"Solution is correct = {result_day_1 == a1}")
+    # print(f"Solution is correct = {result_day_1 == a1}")
 
     if part2:
         result_day_2 = part2(data)
         print(f"Answer to test part 2 is {result_day_2}")
-        print(f"Solution is correct = {result_day_2 == a2}")
+        # print(f"Solution is correct = {result_day_2 == a2}")
