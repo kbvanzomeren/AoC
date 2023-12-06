@@ -31,6 +31,8 @@ def parse_data(data, part=1):
 
 
 def run_rounds(seeds_min_max, _rounds):
+    # print("Initial seed ranges")
+    # print(seeds_min_max)
     for j, _round in enumerate(_rounds):
         new_ranges = []
         for (seeds_min, seed_max) in seeds_min_max:
@@ -63,6 +65,8 @@ def run_rounds(seeds_min_max, _rounds):
                 if is_done or seeds_min == seed_max:
                     break
         seeds_min_max = deepcopy(new_ranges)
+        # print(f"New ranges end of round {j + 1}")
+        # print(seeds_min_max)
     return min([x[0] for x in seeds_min_max])
 
 
@@ -77,7 +81,6 @@ def part2(data):
 
 
 if __name__ == "__main__":
-    print("Start")
     start = time.time()
     test(file_name=FILE_NAME, part1=part1, part2=part2, a1=35, a2=46)
 
@@ -85,4 +88,4 @@ if __name__ == "__main__":
     data = load_data(file_path)
     print(f"Answer to part 1 is {part1(data)}")
     print(f"Answer to part 2 is {part2(data)}")
-    print("Elapsed time", time.time() - start)
+    print("Finished after", f"{round((time.time() - start), 5)} seconds")

@@ -16,12 +16,17 @@ def np_map(data, mapper={'.': 0, '#': 1}):
 import re
 
 
-def get_numbers(line, remove=''):
+def get_numbers(line, remove='', cast_to_int=True):
     """Function that returns all numbers in a string
         "hello 42 I'm a -32 string 30"
-        :return: ['42', '-32', '30']
+        :return: [' 42', '-32', '30']
     """
-    return [number for number in re.findall(r'[-+]?\d*(?:.\d+)?', line) if number != remove]
+    _regex = r'[+-]?\b\d+\b'
+
+    if cast_to_int:
+        return [int(number) for number in re.findall(_regex, line) if number != remove]
+    else:
+        return [number for number in re.findall(_regex, line) if number != remove]
 
 
 # get digits
