@@ -31,8 +31,6 @@ def parse_data(data, part=1):
 
 
 def run_rounds(seeds_min_max, _rounds):
-    # print("Initial seed ranges")
-    # print(seeds_min_max)
     for j, _round in enumerate(_rounds):
         new_ranges = []
         for (seeds_min, seed_max) in seeds_min_max:
@@ -65,8 +63,6 @@ def run_rounds(seeds_min_max, _rounds):
                 if is_done or seeds_min == seed_max:
                     break
         seeds_min_max = deepcopy(new_ranges)
-        # print(f"New ranges end of round {j + 1}")
-        # print(seeds_min_max)
     return min([x[0] for x in seeds_min_max])
 
 

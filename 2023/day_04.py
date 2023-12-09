@@ -12,9 +12,7 @@ def check_tickets(data):
         _, numbers = line.split(": ")
         winning, ticket = numbers.split(' | ')
         winning = [n for n in winning.split(' ')]
-
         matches = sum(n in winning for n in ticket.split(' ') if n != "")
-
         tickets[card_id + 1] = [matches, 1]
     return tickets
 

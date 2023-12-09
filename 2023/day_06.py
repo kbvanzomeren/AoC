@@ -27,6 +27,7 @@ def run_games(times, records):
         result *= sum(s * (time - s) > record for s in range(0, time + 1))
     return result
 
+
 def parabolic_solver(a, b, c):
     upper = (-b + (b**2 - 4*a*c)**0.5) / (2*a)
     lower = (-b - (b**2 - 4*a*c)**0.5) / (2*a)
