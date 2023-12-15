@@ -7,87 +7,65 @@ from functions.test import test
 INPUT_DIR = f"./inputs/"
 FILE_NAME = os.path.basename(__file__).replace('.py', 'a.txt')
 
-_map = {**{str(n): n for n in range(1, 10)}, **{'T': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14}}
 
-
-def order(hands, part):
-    strength_order = defaultdict(list)
-    for cards in hands.keys():
-        if part == 1:
-            jokers = 0
-            counter = {c: cards.count(c) for c in cards}
-        else:
-            _map['J'] == 1
-            counter = {c: cards.count(c) for c in cards if c != "J"}
-            jokers = cards.count("J")
-        if jokers == 5 or len(counter) == 1:
-            strength = 21
-        elif max(counter.values()) + jokers == 4:
-            strength = 20
-        elif max(counter.values()) + jokers == 3:
-            strength = 18
-            if jokers <= 1 and min(counter.values()) == 2:
-                strength = 19
-        elif max(counter.values()) + jokers == 2:
-            strength = 16
-            if jokers == 0 and len(counter) == 3:
-                strength = 17
-        else:
-            # Don't need to order high cards ... 🤕
-            # _type = max([_map[c] for c in cards])
-            strength = 1
-        strength_order[strength].append(cards)
-
-    final_strength_order = []
-    for score in range(21, 0, -1):
-        final_strength_order += check_tiebreaker(strength_order.get(score, []), 0)
-        
-    return final_strength_order
-
-
-def check_tiebreaker(games, i):
-    new_order = []
-    initial_shuffel = defaultdict(list)
-    for game in games:
-        initial_shuffel[_map[game[i]]].append(game)
-
-    for ci in range(14, 0, -1):
-        games_to_order = initial_shuffel.get(ci, [])
-        if len(initial_shuffel.get(ci, [])) > 1:
-            new_order += check_tiebreaker(games_to_order, i + 1)
-        else:
-            new_order += games_to_order
-    return new_order
-
-
-def read_hands(data):
-    scores = {}
+def parse_data(data):
+    values = {
+        '1': 1,
+        '2': 2
+    }
+    gates = []
     for line in data:
-        cards, bid = line.split(' ')
-        scores[cards] = int(bid)
-    return scores
+        _input, target = line.split(' -> ')
+        if "NOT " in _input:
+            gates.append(("NOT", _input.replace('NOT ', ""), "", target))
+        elif ' ' in _input:
+            for method in [" AND ", " OR ", " LSHIFT ", " RSHIFT "]:
+                if method in _input:
+                    x, y = _input.split(method)
+                    gates.append((method.strip(), x, y, target))
+        else:
+            if _input.isdigit():
+                values[target] = int(_input)
+            else:
+                gates.append(("INSERT", _input, "", target))
+    return values, gates
 
 
-def score_games(final_order, scores):
-    final = 0
-    _max = len(final_order)
-    for cards in final_order:
-        final += _max * scores[cards]
-        _max -= 1
-    return final
+def get_signal(values, gates):
+    while "a" not in values and gates:
+        skipped_gates = []
+        for (gate, x, y, target) in gates:
+            if x in values and gate in ["LSHIFT", "RSHIFT", "NOT", "INSERT"]:
+                if gate == "LSHIFT":
+                    values[target] = values[x] << int(y)
+                elif gate == "RSHIFT":
+                    values[target] = values[x] >> int(y)
+                elif gate == "INSERT":
+                    values[target] = values[x]
+                elif gate == "NOT":
+                    value = ''.join(['1' if b == '0' else '0' for b in '{0:016b}'.format(values[x])])
+                    values[target] = int(value, 2)
+            elif x in values and y in values and gate in ["AND", "OR"]:
+                if gate == "AND":
+                    values[target] = values[x] & values[y]
+                elif gate == "OR":
+                    values[target] = values[x] | values[y]
+            else:
+                skipped_gates.append((gate, x, y, target))
+        gates = skipped_gates
+    return values.get('a', 1)
 
 
 def part1(data):
-    hands = read_hands(data)
-    new_order = order(hands, part=1)
-    return score_games(new_order, hands)
+    values, gates = parse_data(data)
+    return get_signal(values, gates)
 
 
 def part2(data):
-    hands = read_hands(data)
-    new_order = order(hands, part=2)
-    return score_games(new_order, hands)
-
+    value = part1(data)
+    values, gates = parse_data(data)
+    values['b'] = value
+    return get_signal(values, gates)
 
 if __name__ == "__main__":
     test(file_name=FILE_NAME, part1=part1, part2=part2, a1=1, a2=2)
